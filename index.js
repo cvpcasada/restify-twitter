@@ -10,7 +10,7 @@ var T = new Twit({
 });
 
 function respond(req, res) {
-	var count = (req.params.count) ? req.params.count : 1;
+	var count = ('undefined' === typeof req.params.count) ? req.params.count : 1;
 
 	T.get('search/tweets', {
 		q: req.params.q,
