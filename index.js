@@ -9,8 +9,6 @@ var T = new Twit({
 
 });
 
-
-
 function respond(req, res) {
 	var count = (req.params.count) ? req.params.count : 1;
 
@@ -27,13 +25,17 @@ function respond(req, res) {
   //res.send('hello ' + req.params.name);
 }
 
+
 var app = Express();
+
+app.set('port', (process.env.PORT || 3000));
+
 app.get('/', function (req, res) {
   res.send('Hello World!');
 });
 
 app.get('/search/:q/:count', respond);
 
-app.listen(3000, function () {
-  console.log('Example app listening on port 3000!');
+app.listen(app.get('port'), function () {
+  console.log('restify-twitter is running on port', app.get('port'));
 });
