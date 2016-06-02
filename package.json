@@ -1,6 +1,9 @@
 {
   "name": "restify-twitter",
   "version": "0.0.1",
+  "engines": {
+    "node": "4.1.1"
+  },
   "description": "A rest client for consuming twitter api 1.1",
   "main": "index.js",
   "dependencies": {

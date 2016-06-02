@@ -9,8 +9,8 @@ var T = new Twit({
 
 });
 
-function respond(req, res) {
-	var count = ('undefined' === typeof req.params.count) ? req.params.count : 1;
+function twitterSearch(req, res) {
+	var count = (typeof req.params.count != 'undefined') ? req.params.count : 1;
 
 	T.get('search/tweets', {
 		q: req.params.q,
@@ -21,20 +21,25 @@ function respond(req, res) {
 	}).then(function(result) {
 		res.send(result.data)
 	});
-
-  //res.send('hello ' + req.params.name);
 }
 
 
 var app = Express();
-
 app.set('port', (process.env.PORT || 3000));
 
-app.get('/', function (req, res) {
-  res.send('Hello World!');
-});
 
-app.get('/search/:q/:count', respond);
+// ROUTES FOR OUR API
+// =============================================================================
+var router = Express.Router();              // get an instance of the express Router
+
+// test route to make sure everything is working (accessed at GET http://localhost:8080/api)
+router.route('/search/:q/:count*?').get(twitterSearch);
+
+// more routes for our API will happen here
+
+// REGISTER OUR ROUTES -------------------------------
+// all of our routes will be prefixed with /api
+app.use('/api', router);
 
 app.listen(app.get('port'), function () {
   console.log('restify-twitter is running on port', app.get('port'));
