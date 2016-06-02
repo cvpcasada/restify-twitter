@@ -26,7 +26,7 @@ var T = new Twit({
 });
 
 function twitterSearch(req, res) {
-	var size = (typeof req.params.size != 'undefined') ? req.params.size : 1;
+	var size = req.params.size === undefined ? 1 : req.params.size;
 
 	T.get('search/tweets', {
 		q: req.params.q,
