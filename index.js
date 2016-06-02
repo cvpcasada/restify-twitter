@@ -2,22 +2,6 @@ var Express = require('express');
 var Twit = require('twit');
 var _ = require('lodash/core');
 
-// mixin for lodash for nested omit
-_.mixin({
-    nestedOmit: function(obj, iteratee, context) {
-        // basic _.omit on the current object
-        var r = _.omit(obj, iteratee, context);
-
-        //transform the children objects
-        _.each(r, function(val, key) {
-            if (typeof(val) === "object")
-                r[key] = _.nestedOmit(val, iteratee, context);
-        });
-
-        return r;
-    }
-});
-
 var T = new Twit({
 	consumer_key: 		'5js6h2I8ADLr1GDWfshnFAkVb',
 	consumer_secret: 	'r95yuyyYkNBZqmYp4NJ1adGecpmhc9G6OOmvvarpWm311i4Blz', 
@@ -30,7 +14,7 @@ function twitterSearch(req, res) {
 
 	T.get('search/tweets', {
 		q: req.params.q,
-		size: size
+		count: size
 	}).catch(function (err) {
 		console.log('some error', err.stack);
 		// post a http 500
