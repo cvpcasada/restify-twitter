@@ -60,7 +60,7 @@ function twitterSearch(req, res) {
 			return _.extend(basic,{ media : media },user);
 		})
 
-		res.send(out);
+		res.jsonp(out);
 	});
 }
 
